@@ -1,6 +1,3 @@
-
--- Banco de dados aprimorado para o sistema de músicas
-
 -- Usuários
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
@@ -9,16 +6,22 @@ CREATE TABLE usuarios (
     senha_hash VARCHAR(100) NOT NULL
 );
 
+-- Artistas
+CREATE TABLE artistas (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE
+);
+
 -- Músicas
 CREATE TABLE musicas (
     id SERIAL PRIMARY KEY,
     titulo VARCHAR(100) NOT NULL,
-    nome_artista VARCHAR(100) NOT NULL,
+    artista_id INT NOT NULL REFERENCES artistas(id) ON DELETE CASCADE,
     genero VARCHAR(50),
     duracao_segundos INT CHECK (duracao_segundos > 0)
 );
 
--- Curtidas (ações atuais)
+-- Curtidas 
 CREATE TABLE curtidas (
     id SERIAL PRIMARY KEY,
     usuario_id INT NOT NULL,
@@ -29,7 +32,7 @@ CREATE TABLE curtidas (
     CONSTRAINT uq_usuario_musica UNIQUE (usuario_id, musica_id)
 );
 
--- Descurtidas (ações passadas, registradas no histórico)
+-- Descurtidas 
 CREATE TABLE descurtidas (
     id SERIAL PRIMARY KEY,
     usuario_id INT NOT NULL,
@@ -59,7 +62,7 @@ CREATE TABLE playlist_musicas (
     CONSTRAINT uq_playlist_musica UNIQUE (playlist_id, musica_id)
 );
 
--- Histórico unificado de ações: buscar, curtir, descurtir
+-- Histórico de ações: buscar, curtir, descurtir
 CREATE TABLE historico_acoes (
     id SERIAL PRIMARY KEY,
     usuario_id INT NOT NULL,
