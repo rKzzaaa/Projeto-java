@@ -13,7 +13,7 @@ public class MusicaDAO {
 
     public List<Musica> buscarPorTermo(String termo) throws SQLException {
         List<Musica> musicas = new ArrayList<>();
-        String sql = "SELECT * FROM musicas WHERE titulo ILIKE ? OR genero ILIKE ?";
+        String sql = "SELECT * FROM musicas WHERE titulo ILIKE ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             String like = "%" + termo + "%";
             stmt.setString(1, like);
