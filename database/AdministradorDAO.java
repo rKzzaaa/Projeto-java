@@ -1,18 +1,19 @@
 package database;
 
-import entidades.Administrador;
+import entidades.Adm;
 import entidades.Artista;
 import entidades.Musica;
 import java.sql.*;
 
 public class AdministradorDAO {
+
     private final Connection conn;
 
     public AdministradorDAO(Connection conn) {
         this.conn = conn;
     }
 
-    public int cadastrarAdministrador(Administrador admin) throws SQLException {
+    public int cadastrarAdministrador(Adm admin) throws SQLException {
         String sql = "INSERT INTO administradores (nome, nome_usuario, senha_hash) VALUES (?, ?, ?) RETURNING id";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, admin.getNome());
@@ -26,14 +27,14 @@ public class AdministradorDAO {
         return -1;
     }
 
-    public Administrador autenticar(String nomeUsuario, String senhaHash) throws SQLException {
+    public Adm autenticar(String nomeUsuario, String senhaHash) throws SQLException {
         String sql = "SELECT * FROM administradores WHERE nome_usuario = ? AND senha_hash = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, nomeUsuario);
             stmt.setString(2, senhaHash);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Administrador(
+                return new Adm(
                     rs.getInt("id"),
                     rs.getString("nome"),
                     rs.getString("nome_usuario"),

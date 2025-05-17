@@ -1,25 +1,35 @@
 package entidades;
 
-public class Administrador extends Pessoa implements Autenticacao {
-    private String email;
-    private String senha;
+public class Adm extends Pessoa implements Autenticacao {
+    private String nomeUsuario;
+    private String senhaHash;
 
-    public Administrador() {}
+    public Adm() {}
 
-    public Administrador(int id, String nome, String email, String senha) {
+    public Adm(int id, String nome, String nomeUsuario, String senhaHash) {
         super(id, nome);
-        this.email = email;
-        this.senha = senha;
+        this.nomeUsuario = nomeUsuario;
+        this.senhaHash = senhaHash;
     }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
 
-    public String getSenha() { return senha; }
-    public void setSenha(String senha) { this.senha = senha; }
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+
+    public String getSenhaHash() {
+        return senhaHash;
+    }
+
+    public void setSenhaHash(String senhaHash) {
+        this.senhaHash = senhaHash;
+    }
 
     @Override
     public boolean autenticar(String usuario, String senhaHash) {
-        return this.email.equals(usuario) && this.senha.equals(senhaHash);
+        return this.nomeUsuario.equals(usuario) && this.senhaHash.equals(senhaHash);
     }
 }
