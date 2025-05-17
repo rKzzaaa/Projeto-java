@@ -1,11 +1,11 @@
-package database;
+package Aplicativo;
 
 import entidades.HistoricoAcao;
 import entidades.Playlist;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class CurtirService {
+public class CDServico {
     private final PlaylistDAO playlistDAO;
     private final PlaylistMusicaDAO playlistMusicaDAO;
     private final HistoricoAcaoDAO historicoDAO;
